@@ -154,6 +154,15 @@ typedef enum {
 	EGG_HATCH_ROUTINE(), EGG_HATCH_ROUTINE(), EGG_HATCH_ROUTINE(), EGG_HATCH_ROUTINE(), \
 	EGG_HATCH_ROUTINE()
 	
+#define SURPRISE_TRADE() \
+	{ Y, 5 }, { NOTHING, 40 }, { DOWN, 5 }, { NOTHING, 30 }, \
+	{ A, 5 }, { NOTHING, 70 }, { A, 5 }, { NOTHING, 40 }, \
+	{ A, 5 }, { NOTHING, 70 }, { A, 5 }, { NOTHING, 50 }, \
+	{ A, 5 }, { NOTHING, 50 }, { A, 5 }, { NOTHING, 50 }, \
+	{ A, 5 }, { NOTHING, 50 }, { A, 5 }, { NOTHING, 50 }, \
+	{ A, 5 }, { NOTHING, 50 }, { A, 5 }, { NOTHING, 400 }, \
+	{ A, 5 }, { NOTHING, 400 }, { A, 5 }, { NOTHING, 400 }, \
+	{ A, 5 }, { NOTHING, 400 }, { A, 5 }
 
 #define UP_TO_DAYCARE() \
 	{ RIGHT, 60 }, { DOWN, 40 }, { RIGHT, 30 }, { UP, 185 }, \

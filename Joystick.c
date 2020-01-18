@@ -53,32 +53,7 @@ static const command step[] = {
 	// Setup controller
 	CONTROLLER_SETUP(),
 	
-	//Go up to the daycare lady
-	UP_TO_DAYCARE(),
-
-	//Get the first egg
-	GET_EGG_1(),
-	
-	//Step down and get on bike
-	SET_UP_BIKE(),
-	
-	//Bike in circles to prep another egg
-	EGG_GET_ROUTINE(),
-	
-	//Get the second egg
-	GET_EGG_2(),
-
-	//Step down and get on bike
-	SET_UP_BIKE(),
-	
-	//Go to the hatch route
-	SET_UP_ROUTE(),
-	
-	//Perform the hatch route for 5,120 base egg step eggs
-	ROUTINE_5120(),
-	
-	//Warp to the route for a reset
-	WARP_BACK(),
+	SURPRISE_TRADE()
 };
 
 // Main entry point.
