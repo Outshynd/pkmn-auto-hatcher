@@ -274,7 +274,7 @@ static const command step1[] = {
     WATT_FARM_DAY()
     */     
 
-    ///// 2560 multi hatch p1 /////
+    ///// 2560/3840 multi hatch p1 /////
     UP_TO_DAYCARE(),     
     GET_EGG_1() 
 
@@ -296,6 +296,7 @@ static const command step2[] = {
     MONTH_CHANGE_P1(),
     MONTH_CHANGE_P2()
     */ 
+    ///// 2560/3840 multi hatch p2 /////
     SET_UP_MULTI()
     
 
@@ -319,8 +320,9 @@ static const command step3[] = {
     YEAR_CHANGE_P2()
     */
 
-    ///// 2560 multi hatch p3 //////
+    ///// 2560/3840 multi hatch p3 //////
     CIRCLE_CW(4)
+
 
 };
 
@@ -335,7 +337,7 @@ static const command step4[] = {
     { B, 10 }, { NOTHING, 10 },    
     */
 
-    ///// 2560 multi hatch p3 //////
+    ///// 2560/3840 multi hatch p4 /////
     EGG_HATCH_SLOW(),
     MULTI_TO_DAYCARE(),
     GET_EGG_1()
@@ -814,6 +816,7 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
                 */
 
                 ///// 2560 multi hatch p2 /////
+
                 bufindex = 0;
                 duration_count = 0;
                 process3iterator = 0;
@@ -874,6 +877,7 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
                 */
 
                 ///// 2560 multi hatch /////
+                /*
                 bufindex = 0;
                 duration_count = 0;
 
@@ -884,6 +888,21 @@ void GetNextReport(USB_JoystickReport_Input_t* const ReportData) {
                 else {
                     state = PROCESS_4;
                 }
+                */
+                ///// 3840 multi hatch p2 /////
+                // Note: 3840 is a slight mod of 2560
+                bufindex = 0;
+                duration_count = 0;
+
+                process3iterator++;
+                if(process3iterator < 57) {
+                    state = PROCESS_3;
+                }
+                else {
+                    state = PROCESS_4;
+                }
+
+
 
                 ReportData->LX = STICK_CENTER;
                 ReportData->LY = STICK_CENTER;
