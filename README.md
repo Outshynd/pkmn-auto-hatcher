@@ -2,6 +2,8 @@
 
 ## Overview
 
+This project is outdated and is **no longer actively being developed**. I can answer questions related to this project but further changes to this repository are no longer being made. This is as a result of [my new version of this project](https://github.com/ironandstee1/swemu-plus-plus) which improves on this one in almost every way but is only compatible with ATMega32u4 boards. This new project has all the scripts shown here with more optimization and a handful of new ones as well. 
+
 Automatically hatches pokemon in sword and shield with the aim of allowing users to farm shinies overnight. 
 
 Scripts are currently complete for the following:
