@@ -10,4 +10,4 @@
 *.eep
 LUFA/
 *.code-workspace
-.vscode/
+/.vscode/
