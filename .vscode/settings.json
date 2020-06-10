@@ -1,0 +1,14 @@
+{
+    "files.exclude": {
+        "*.bin": true,
+        "*.code-workspace": true,
+        "*.eep": true,
+        "*.elf": true,
+        "*.git*": true,
+        "*.hex": true,
+        "*.lss": true,
+        "*.map": true,
+        "*.sym": true,
+        "LUFA_LICENSE": true
+    }
+}
