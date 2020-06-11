@@ -5,6 +5,8 @@
 
 #include "Descriptors.h"
 
+#define CENTER_STICKS_AND_UPDATE_USB() ReportData.LX = STICK_CENTER;ReportData.LY = STICK_CENTER;ReportData.RX = STICK_CENTER;ReportData.RY = STICK_CENTER;HandleUSB();
+
 void Test(void);
 
 #endif

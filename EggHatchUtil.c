@@ -25,11 +25,12 @@ void PressButton(uint16_t button, int duration, int delay)
     while ((millis() - start) < duration)
     {
         ReportData.Button |= button;
-        ReportData.LX = STICK_CENTER;
-        ReportData.LY = STICK_CENTER;
-        ReportData.RX = STICK_CENTER;
-        ReportData.RY = STICK_CENTER;
-        HandleUSB();
+        // ReportData.LX = STICK_CENTER;
+        // ReportData.LY = STICK_CENTER;
+        // ReportData.RX = STICK_CENTER;
+        // ReportData.RY = STICK_CENTER;
+        // HandleUSB();
+        CENTER_STICKS_AND_UPDATE_USB();
     }
 
     if (delay > 0)
@@ -54,10 +55,11 @@ void Sleep(int delay)
 
     while ((millis() - start) < delay)
     {
-        ReportData.LX = STICK_CENTER;
-        ReportData.LY = STICK_CENTER;
-        ReportData.RX = STICK_CENTER;
-        ReportData.RY = STICK_CENTER;
-        HandleUSB();
+        // ReportData.LX = STICK_CENTER;
+        // ReportData.LY = STICK_CENTER;
+        // ReportData.RX = STICK_CENTER;
+        // ReportData.RY = STICK_CENTER;
+        // HandleUSB();
+        CENTER_STICKS_AND_UPDATE_USB();
     }
 }
