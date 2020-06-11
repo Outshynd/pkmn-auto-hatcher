@@ -33,8 +33,8 @@
  *  Header file for Joystick.c.
  */
 
-#ifndef _JOYSTICK_H_
-#define _JOYSTICK_H_
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
 /* Includes: */
 #include <avr/io.h>
@@ -42,6 +42,7 @@
 #include <avr/power.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
+#include <util/atomic.h>
 #include <string.h>
 
 #include <LUFA/Drivers/USB/USB.h>
@@ -53,6 +54,38 @@
 #include "Descriptors.h"
 
 // Type Defines
+// typedef enum
+// {
+//     UP,
+//     DOWN,
+//     LEFT,
+//     RIGHT,
+//     UPLEFT,
+//     UPRIGHT,
+//     DOWNLEFT,
+//     DOWNRIGHT,
+//     LEFTB,
+//     RIGHTB,
+//     DOWNB,
+//     X,
+//     Y,
+//     A,
+//     B,
+//     L,
+//     R,
+//     PLUS,
+//     MINUS,
+//     NOTHING,
+//     HOME,
+//     TRIGGERS
+// } Buttons_t;
+
+// typedef struct
+// {
+//     Buttons_t button;
+//     uint16_t duration;
+// } command;
+
 // Enumeration for joystick buttons.
 typedef enum
 {
@@ -111,6 +144,9 @@ typedef struct
 } USB_JoystickReport_Output_t;
 
 // Function Prototypes
+void HandleUSB(void);
+void timer0_init(void);
+unsigned long millis(void);
 // Setup all necessary hardware, including USB initialization.
 void SetupHardware(void);
 // Process and deliver data from IN and OUT endpoints.
@@ -120,5 +156,7 @@ void EVENT_USB_Device_Connect(void);
 void EVENT_USB_Device_Disconnect(void);
 void EVENT_USB_Device_ConfigurationChanged(void);
 void EVENT_USB_Device_ControlRequest(void);
+
+USB_JoystickReport_Input_t ReportData;
 
 #endif

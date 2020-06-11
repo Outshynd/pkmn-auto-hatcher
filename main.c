@@ -18,78 +18,82 @@ exception of Home and Capture. Descriptor modification allows us to unlock
 these buttons for our use.
 */
 
-#include "Joystick.h"
+#include "main.h"
 
-typedef enum
-{
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
-    UPLEFT,
-    UPRIGHT,
-    DOWNLEFT,
-    DOWNRIGHT,
-    LEFTB,
-    RIGHTB,
-    DOWNB,
-    X,
-    Y,
-    A,
-    B,
-    L,
-    R,
-    PLUS,
-    MINUS,
-    NOTHING,
-    HOME,
-    TRIGGERS
-} Buttons_t;
+#undef F_CPU
+#define F_CPU 16000000UL                         // 16 MHz
+#define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 64) //250 @ 16MHz
 
-typedef struct
+volatile unsigned long timer0_milliseconds = 0;
+
+void timer0_init()
 {
-    Buttons_t button;
-    uint16_t duration;
-} command;
+    // Set the Timer Mode to CTC
+    TCCR0A |= (1 << WGM01);
+
+    //set the compare value
+    OCR0A = CTC_MATCH_OVERFLOW;
+
+    //set the interrupt COMPA vect
+    TIMSK0 |= (1 << OCIE0A);
+
+    sei();
+
+    //set prescaler 64 & start
+    TCCR0B |= (1 << CS00) | (1 << CS01);
+}
+
+//interrupt and increment milliseconds
+ISR(TIMER0_COMPA_vect)
+{
+    timer0_milliseconds++;
+}
+
+//rough implementation of arduino millis func
+unsigned long millis()
+{
+    unsigned long ms_ret;
+
+    ATOMIC_BLOCK(ATOMIC_FORCEON)
+    {
+        ms_ret = timer0_milliseconds;
+    }
+
+    return ms_ret;
+}
 
 void HandleUSB()
 {
-    // Main entry point.
-    int main(void)
-    {
-        // We'll start by performing hardware and peripheral setup.
-        SetupHardware();
-        // We'll then enable global interrupts for our use.
-        GlobalInterruptEnable();
-        // Once that's done, we'll enter an infinite loop.
-        for (;;)
-        {
-            // We need to run our task to process and deliver data for our IN and OUT endpoints.
-            HID_Task();
-            // We also need to run the main USB management task.
-            USB_USBTask();
-        }
-    }
+    // We need to run our task to process and deliver data for our IN and OUT endpoints.
+    HID_Task();
+    // We also need to run the main USB management task.
+    USB_USBTask();
 }
+
+//unsigned long prevMillis = 0;
 
 // Main entry point.
 int main(void)
 {
     // We'll start by performing hardware and peripheral setup.
     SetupHardware();
+
+    //init our timer
+    timer0_init();
+
     // We'll then enable global interrupts for our use.
     GlobalInterruptEnable();
     // Once that's done, we'll enter an infinite loop.
+    // unsigned long i = 0;
+    bool buttonPressed = false;
+
     for (;;)
     {
-        // We need to run our task to process and deliver data for our IN and OUT endpoints.
-        HID_Task();
-        // We also need to run the main USB management task.
-        USB_USBTask();
+        //this is where you call the function you want to use
+        Test();
     }
 }
 
-USB_JoystickReport_Input_t ReportData;
 // Configures hardware and peripherals, such as the USB peripherals.
 void SetupHardware(void)
 {
