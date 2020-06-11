@@ -1,3 +1,15 @@
+# Edited - Pokemon Sword/Shield Tools
+
+I am in the process (as of June 2020) of editing this codebase to allow for more easy to read automation scripts.  It will start life as an auto hatcher for Pokemon Sword/Shield, but my plan is to migrate it to a general-purpose automation project for the Nintendo Switch, utilizing either a Teensy++ 2.0 or SparkFun Pro Micro or Teensy 2.0 (or clones).
+
+The Teensy++ 2.0 and Teensy 2.0 are a bit more expensive, but they are easier to flash, so, if you have never done any AVR programming before and want to get started in the easiest manner, grab a Teensy 2.0 Amazon or straight from pjrc.com.
+
+## More to come soon.
+
+
+# _____________________
+# ORIGINAL README:
+
 # Pokemon Sword/Shield auto hatcher
 
 ## Overview
