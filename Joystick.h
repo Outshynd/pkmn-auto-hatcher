@@ -52,6 +52,7 @@
 #include <LUFA/Platform/Platform.h>
 
 #include "Descriptors.h"
+#include "SwitchInput.h"
 
 // Type Defines
 // typedef enum

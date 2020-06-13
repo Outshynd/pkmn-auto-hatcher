@@ -18,7 +18,7 @@ exception of Home and Capture. Descriptor modification allows us to unlock
 these buttons for our use.
 */
 
-#include "main.h"
+#include "Joystick.h"
 
 #undef F_CPU
 #define F_CPU 16000000UL                         // 16 MHz
@@ -84,13 +84,11 @@ int main(void)
     // We'll then enable global interrupts for our use.
     GlobalInterruptEnable();
     // Once that's done, we'll enter an infinite loop.
-    // unsigned long i = 0;
-    bool buttonPressed = false;
 
     for (;;)
     {
-        //this is where you call the function you want to use
-        Test();
+        //this loop resides in SwitchInput.c and is called in an infinite loop - write your scripts in SwitchInput.c or call them from that location
+        MainInputLoop();
     }
 }
 
@@ -174,6 +172,7 @@ void HID_Task(void)
         // We then send an IN packet on this endpoint.
         Endpoint_ClearIN();
         /* Clear the report data afterwards */
-        memset(&ReportData, 0, sizeof(ReportData));
+        //Edit: we do not want to clear the data so we can send discrete DOWN and UP commands for buttons
+        //memset(&ReportData, 0, sizeof(ReportData));
     }
 }

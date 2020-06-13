@@ -10,5 +10,5 @@
         "*.map": true,
         "*.sym": true,
         "LUFA_LICENSE": true
-    }
+    },
 }
