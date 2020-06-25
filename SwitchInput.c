@@ -10,11 +10,8 @@ void MainInputLoop()
         _isInit = true;
 
         Sleep(2000);
-
-        ButtonDown(SWITCH_B);
     }
 
-    //HoldButton(SWITCH_A, 500, 500);
     PressButton(SWITCH_A, 1000);
 }
 
@@ -58,6 +55,10 @@ void Sleep(int delay)
 
     while ((millis() - start) < delay)
     {
+        // ReportData.LX = STICK_CENTER;
+        // ReportData.LY = STICK_CENTER;
+        // ReportData.RX = STICK_CENTER;
+        // ReportData.RY = STICK_CENTER;
         HandleUSB();
     }
 }

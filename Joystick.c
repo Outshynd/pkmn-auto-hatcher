@@ -20,8 +20,10 @@ these buttons for our use.
 
 #include "Joystick.h"
 
-#undef F_CPU
-#define F_CPU 16000000UL                         // 16 MHz
+#ifndef F_CPU
+	#error F_CPU is undefined
+#endif
+
 #define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 64) //250 @ 16MHz
 
 volatile unsigned long timer0_milliseconds = 0;
@@ -78,12 +80,20 @@ int main(void)
     // We'll start by performing hardware and peripheral setup.
     SetupHardware();
 
-    //init our timer
+    //init our timer used for 'millis()' implementation
     timer0_init();
 
     // We'll then enable global interrupts for our use.
     GlobalInterruptEnable();
     // Once that's done, we'll enter an infinite loop.
+
+    memset(&ReportData, 0, sizeof(ReportData));
+
+    ReportData.LX = STICK_CENTER;
+    ReportData.LY = STICK_CENTER;
+    ReportData.RX = STICK_CENTER;
+    ReportData.RY = STICK_CENTER;
+    ReportData.HAT = HAT_CENTER;
 
     for (;;)
     {
