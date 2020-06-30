@@ -36,6 +36,8 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#define DEBUG
+
 /* Includes: */
 #include <avr/io.h>
 #include <avr/wdt.h>
@@ -50,6 +52,7 @@
 #include <LUFA/Drivers/Board/LEDs.h>
 #include <LUFA/Drivers/Board/Buttons.h>
 #include <LUFA/Platform/Platform.h>
+#include <LUFA/Drivers/Peripheral/Serial.h>
 
 #include "Descriptors.h"
 #include "SwitchInput.h"
@@ -148,6 +151,10 @@ typedef struct
 void HandleUSB(void);
 void timer0_init(void);
 unsigned long millis(void);
+void serial_init(void);
+int16_t serial_popshort(void);
+void serial_pushchar(char);
+void serial_flushcommands(void);
 // Setup all necessary hardware, including USB initialization.
 void SetupHardware(void);
 // Process and deliver data from IN and OUT endpoints.

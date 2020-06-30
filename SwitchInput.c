@@ -9,10 +9,50 @@ void MainInputLoop()
     {
         _isInit = true;
 
+        // Sleep(1000);
+        // ButtonDown(SWITCH_R);
+        // ButtonDown(SWITCH_L);
+        // Sleep(100);
+        // ButtonUp(SWITCH_R);
+        // ButtonUp(SWITCH_L);
+        // Sleep(500);
+        // ButtonDown(SWITCH_R);
+        // ButtonDown(SWITCH_L);
+        // Sleep(100);
+        // ButtonUp(SWITCH_R);
+        // ButtonUp(SWITCH_L);
         Sleep(2000);
     }
 
+//     int16_t data = serial_popshort();
+
+//     if (data >= 0)
+//     {
+// #ifdef DEBUG
+//         printf("Command: %c - Arg: %c\n", (char)(data >> 8), (char)(data));
+// #endif
+
+//         char command = (char)(data >> 8);
+//         char arg = (char)data;
+
+//         //react to command and arg
+//         switch (command)
+//         {
+//         case 1:
+//             ButtonDown(1 << (arg - 1));
+//             break;
+//         case 2:
+//             ButtonUp(1 << (arg - 1));
+//             break;
+//         default:
+//             break;
+//         }
+//     }
+
     PressButton(SWITCH_A, 1000);
+    //printf("Pressing A");
+    //make sure we're handling USB
+    //HandleUSB();
 }
 
 void HoldButton(uint16_t button, int duration, int delay)

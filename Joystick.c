@@ -21,7 +21,7 @@ these buttons for our use.
 #include "Joystick.h"
 
 #ifndef F_CPU
-	#error F_CPU is undefined
+#error F_CPU is undefined
 #endif
 
 #define CTC_MATCH_OVERFLOW ((F_CPU / 1000) / 64) //250 @ 16MHz
@@ -64,6 +64,90 @@ unsigned long millis()
     return ms_ret;
 }
 
+//buffer that holds 16 * 2-byte commands
+volatile char rx_buf[32] = {0};
+volatile int rx_index = 0;
+
+void serial_init()
+{
+    Serial_Init(9600, false);
+    Serial_CreateStream(NULL);
+    UCSR1B |= (1 << RXCIE1);
+}
+
+ISR(USART1_RX_vect)
+{
+    char c = getchar();
+
+#ifdef DEBUG
+    printf("%c", c);
+#endif
+
+    if (c == 0xFF)
+    {
+        serial_flushcommands();
+        #ifdef DEBUG
+        printf("All commands flushed.\n");
+        #endif
+    }
+
+    serial_pushchar(c);
+}
+
+int16_t serial_popshort()
+{
+    int16_t ret_data = -1;
+
+    if (rx_index == 0 || rx_index == 1)
+    {
+        return ret_data;
+    }
+
+    ATOMIC_BLOCK(ATOMIC_FORCEON)
+    {
+        ret_data = rx_buf[0] << 8 | rx_buf[1];
+
+        char buf[rx_index];
+
+        for (int i = 0; i < rx_index; i++)
+            buf[i] = rx_buf[i + 2];
+
+        for (int i = 0; i < rx_index; i++)
+            rx_buf[i] = 0;
+
+        for (int i = 0; i < sizeof(buf); i++)
+            rx_buf[i] = buf[i];
+
+        rx_index -= 2;
+    }
+
+    return ret_data;
+}
+
+void serial_pushchar(char data)
+{
+    if (rx_index >= (sizeof(rx_buf)))
+    {
+        return;
+    }
+
+    ATOMIC_BLOCK(ATOMIC_FORCEON)
+    {
+        rx_buf[rx_index] = data;
+        rx_index++;
+    }
+}
+
+void serial_flushcommands()
+{
+    ATOMIC_BLOCK(ATOMIC_FORCEON)
+    {
+        rx_index = 0;
+        for (int i = 0; i < sizeof(rx_buf); i++)
+            rx_buf[i] = 0;
+    }
+}
+
 void HandleUSB()
 {
     // We need to run our task to process and deliver data for our IN and OUT endpoints.
@@ -79,6 +163,9 @@ int main(void)
 {
     // We'll start by performing hardware and peripheral setup.
     SetupHardware();
+
+    //serial init
+    serial_init();
 
     //init our timer used for 'millis()' implementation
     timer0_init();
